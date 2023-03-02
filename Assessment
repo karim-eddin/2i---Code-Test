@@ -1,0 +1,81 @@
+Coding Language -------> Java
+
+
+Criteria met:
+
+Reusable function: I created separate functions for each task, allowing them to be reused in other parts of the code or in other projects.
+Boundaries assumptions match code: The readNumbersFromUser function takes in parameters for the minimum and maximum value of the integers to ensure that the user input is within the specified range. The removeDuplicatesAndSortDescending function sorts the array in descending order, as per the requirement.
+Consistent naming convention: I used camelCase naming convention for variables and functions, as per Java conventions.
+Comments: I added comments to explain the purpose of each function and its parameters. I also added inline comments to explain any non-obvious code.
+
+
+
+
+CODE BELOW:
+
+public class NumberList {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int[] arr = readNumbersFromUser(sc, 10, 1, 100);
+        int[] uniqueSortedArr = removeDuplicatesAndSortDescending(arr);
+        printArray(uniqueSortedArr);
+    }
+
+    /**
+     * Reads a list of integers from the user.
+     * 
+     * @param sc        Scanner object for reading input from user
+     * @param count     number of integers to read
+     * @param min       minimum value of each integer
+     * @param max       maximum value of each integer
+     * @return          an array of integers input by the user
+     */
+    public static int[] readNumbersFromUser(Scanner sc, int count, int min, int max) {
+        System.out.printf("Enter %d numbers between %d and %d:%n", count, min, max);
+        int[] arr = new int[count];
+        for (int i = 0; i < count; i++) {
+            arr[i] = sc.nextInt();
+            if (arr[i] < min || arr[i] > max) {
+                throw new IllegalArgumentException("Input number out of range.");
+            }
+        }
+        return arr;
+    }
+
+    /**
+     * Removes duplicates from an array of integers and sorts the remaining values in descending order.
+     * 
+     * @param arr   an array of integers
+     * @return      a new array containing only unique values from the input array, sorted in descending order
+     */
+    public static int[] removeDuplicatesAndSortDescending(int[] arr) {
+        Set<Integer> set = new HashSet<>();
+        for (int num : arr) {
+            set.add(num);
+        }
+        int[] uniqueArr = new int[set.size()];
+        int i = 0;
+        for (int num : set) {
+            uniqueArr[i++] = num;
+        }
+        Arrays.sort(uniqueArr);
+        int[] sortedArr = new int[uniqueArr.length];
+        for (i = 0; i < uniqueArr.length; i++) {
+            sortedArr[i] = uniqueArr[uniqueArr.length - i - 1];
+        }
+        return sortedArr;
+    }
+
+    /**
+     * Prints an array of integers to the console.
+     * 
+     * @param arr   an array of integers
+     */
+    public static void printArray(int[] arr) {
+        System.out.println("Sorted unique numbers in descending order:");
+        for (int num : arr) {
+            System.out.print(num + " ");
+        }
+        System.out.println();
+    }
+}
